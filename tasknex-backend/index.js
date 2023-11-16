@@ -15,6 +15,8 @@ app.use(bodyParser.json());
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  ssl: true,
+  tls: true,
 });
 
 const db = mongoose.connection;
