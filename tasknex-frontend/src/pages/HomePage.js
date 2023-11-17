@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Form, message } from "antd";
+import Header from "../components/Header";
 import TaskForm from "../components/TaskForm";
 import TaskList from "../components/TaskList";
 import TaskFilter from "../components/TaskFilter";
@@ -60,6 +61,7 @@ const HomePage = () => {
 
   return (
     <div>
+      <Header />
       <TaskForm
         onSubmit={handleFormSubmit}
         initialValues={selectedTask}
