@@ -1,11 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const tasksRouter = require('./routes/task.routes');
 
 
 const app = express();
+app.use(cors());
 const PORT = process.env.PORT || 3001;
 
 // Middleware
@@ -14,7 +16,6 @@ app.use(bodyParser.json());
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
   ssl: true,
   tls: true,
 });
