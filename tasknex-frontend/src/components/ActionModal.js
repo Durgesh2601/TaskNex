@@ -1,4 +1,5 @@
 import { Modal, Row, Col, Button, Form } from "antd";
+import { BUTTON_LABELS } from "../constants";
 
 const btnStyle = {
   width: "100%",
@@ -28,7 +29,7 @@ const ActionModal = ({
             loading={isBtnLoading}
             style={{ ...btnStyle }}
           >
-            Done
+            {BUTTON_LABELS[action]}
           </Button>
         </Form.Item>
       </Col>
