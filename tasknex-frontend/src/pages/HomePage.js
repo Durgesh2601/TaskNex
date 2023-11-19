@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import { Form, message } from "antd";
 import Header from "../components/Header";
-import TaskForm from "../components/TaskForm";
 import TaskList from "../components/TaskList";
+import TaskForm from "../components/TaskForm";
 import TaskFilter from "../components/TaskFilter";
+import ActionModal from "../components/ActionModal";
 import { createTask, getTasks } from "../api";
 
 const HomePage = () => {
   const [tasks, setTasks] = useState([]);
-  const [selectedTask, setSelectedTask] = useState(null);
   const [filter, setFilter] = useState("All");
+  const [showModal, setShowModal] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
   const [isBtnLoading, setIsBtnLoading] = useState(false);
+  const [modalType, setModalType] = useState("Create");
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -37,21 +40,26 @@ const HomePage = () => {
       setTasks(updatedData);
       form.resetFields();
       setIsBtnLoading(false);
+      setShowModal(false);
     } catch (error) {
       setIsBtnLoading(false);
       console.error(error);
-      message.error("Oops! Failed to create task.");
+      message.error("Oops! Something went wrong. Please try again.");
     }
   };
 
   const handleTaskUpdate = (task) => {
     // Handle task update (set the selected task in the form)
+    form.setFieldsValue(task);
     setSelectedTask(task);
+    setModalType("Update");
+    setShowModal(true);
   };
 
   const handleTaskDelete = (task) => {
-    // Handle task deletion
-    // Update the 'tasks' state accordingly
+    setModalType("Delete");
+    setSelectedTask(task);
+    setShowModal(true);
   };
 
   const handleFilterChange = (value) => {
@@ -59,15 +67,22 @@ const HomePage = () => {
     setFilter(value);
   };
 
+  const handleCloseModal = () => {
+    // Handle close modal
+    setShowModal(false);
+    setSelectedTask(null);
+    form.resetFields();
+  };
+
+  const handleAddTask = () => {
+    // Handle add task (show modal)
+    setModalType("Create");
+    setShowModal(true);
+  };
+
   return (
     <div>
-      <Header />
-      <TaskForm
-        onSubmit={handleFormSubmit}
-        initialValues={selectedTask}
-        form={form}
-        isBtnLoading={isBtnLoading}
-      />
+      <Header onAddTaskClick={handleAddTask} />
       <TaskFilter onChange={handleFilterChange} />
       <TaskList
         tasks={tasks.filter((task) =>
@@ -76,6 +91,18 @@ const HomePage = () => {
         onUpdate={handleTaskUpdate}
         onDelete={handleTaskDelete}
       />
+      {showModal && (
+        <ActionModal
+          showModal={showModal}
+          handleClose={handleCloseModal}
+          action={modalType}
+          form={form}
+          onFinish={handleFormSubmit}
+          isBtnLoading={isBtnLoading}
+        >
+          <TaskForm modalType={modalType} />
+        </ActionModal>
+      )}
     </div>
   );
 };

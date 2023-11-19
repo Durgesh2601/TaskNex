@@ -8,8 +8,16 @@ const TaskFilter = ({ onChange }) => {
     onChange(value);
   };
 
+  const selectStyle = {
+    width: "8rem",
+  };
+
   return (
-    <Select defaultValue="All" onChange={handleChange}>
+    <Select
+      defaultValue="All"
+      onChange={handleChange}
+      style={{ ...selectStyle }}
+    >
       <Option value="All">All</Option>
       <Option value="To Do">To Do</Option>
       <Option value="In Progress">In Progress</Option>

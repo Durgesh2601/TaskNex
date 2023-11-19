@@ -1,8 +1,7 @@
 import { Table, Button, Space } from "antd";
 
 const TaskList = ({ tasks, onUpdate, onDelete }) => {
-  
-    const columns = [
+  const columns = [
     {
       title: "Title",
       dataIndex: "title",
@@ -19,10 +18,12 @@ const TaskList = ({ tasks, onUpdate, onDelete }) => {
       title: "Status",
       dataIndex: "status",
       key: "status",
+      align: "center",
     },
     {
       title: "Actions",
       key: "actions",
+      align: "center",
       render: (text, record) => (
         <Space size="middle">
           <Button type="link" onClick={() => onUpdate(record)}>
