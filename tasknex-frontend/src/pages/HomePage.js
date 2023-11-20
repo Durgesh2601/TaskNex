@@ -5,7 +5,8 @@ import TaskList from "../components/TaskList";
 import TaskForm from "../components/TaskForm";
 import TaskFilter from "../components/TaskFilter";
 import ActionModal from "../components/ActionModal";
-import { createTask, getTasks } from "../api";
+import { MODALTYPES } from "../constants";
+import { createTask, deleteTask, getTasks, updateTask } from "../api";
 
 const HomePage = () => {
   const [tasks, setTasks] = useState([]);
@@ -31,20 +32,53 @@ const HomePage = () => {
   }, []);
 
   const handleFormSubmit = async (values) => {
-    // Handle form submission (create or update task)
-    // Update the 'tasks' state accordingly
+    const isDelete = modalType === MODALTYPES.DELETE;
+
+    if (isDelete) return handleDeleteTask(selectedTask);
+
+    const methodToCall = getMethodToCall(modalType);
+    if (!methodToCall) return message.error("Invalid action!");
+
     try {
       setIsBtnLoading(true);
-      const response = await createTask(values);
-      const updatedData = [...tasks, response?.data];
+      const response = await methodToCall(values, selectedTask?._id);
+      const { data = {}, message: msg } = response?.data || {};
+      const filteredTasks = tasks.filter((item) => item?._id !== data?._id);
+      const updatedData = [data, ...filteredTasks];
       setTasks(updatedData);
-      form.resetFields();
-      setIsBtnLoading(false);
-      setShowModal(false);
+      message.success(msg);
+      handleCloseModal();
     } catch (error) {
       setIsBtnLoading(false);
       console.error(error);
       message.error("Oops! Something went wrong. Please try again.");
+    }
+  };
+
+  const getMethodToCall = (modalType) => {
+    switch (modalType) {
+      case MODALTYPES.CREATE:
+        return createTask;
+      case MODALTYPES.UPDATE:
+        return updateTask;
+      default:
+        return null;
+    }
+  };
+
+  const handleDeleteTask = async (task) => {
+    try {
+      const { _id } = task || {};
+      setIsBtnLoading(true);
+      const response = await deleteTask(_id);
+      const updatedData = tasks.filter((task) => task._id !== _id);
+      setTasks(updatedData);
+      message.success(response?.data?.message);
+      handleCloseModal();
+    } catch (error) {
+      setIsBtnLoading(false);
+      console.error(error);
+      message.error("Oops! Could not delete task. Please try again.");
     }
   };
 
@@ -72,6 +106,7 @@ const HomePage = () => {
     setShowModal(false);
     setSelectedTask(null);
     form.resetFields();
+    setIsBtnLoading(false);
   };
 
   const handleAddTask = () => {

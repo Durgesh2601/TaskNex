@@ -1,4 +1,5 @@
-import { Table, Button, Space } from "antd";
+import { Table, Button, Space, Tag } from "antd";
+import { getColorByStatus } from "../utils/helperMethods";
 
 const TaskList = ({ tasks, onUpdate, onDelete }) => {
   const columns = [
@@ -19,6 +20,8 @@ const TaskList = ({ tasks, onUpdate, onDelete }) => {
       dataIndex: "status",
       key: "status",
       align: "center",
+      ellipsis: true,
+      render: (text) => <Tag color={getColorByStatus(text)}>{text}</Tag>,
     },
     {
       title: "Actions",

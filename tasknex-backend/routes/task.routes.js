@@ -22,7 +22,9 @@ router.post("/", async (req, res) => {
 
   try {
     const newTask = await task.save();
-    res.status(201).json(newTask);
+    res
+      .status(201)
+      .json({ data: newTask, message: "Task created successfully!" });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -34,7 +36,7 @@ router.patch("/:id", async (req, res) => {
     const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
-    res.json(updatedTask);
+    res.json({ data: updatedTask, message: "Task updated successfully!" });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -44,7 +46,7 @@ router.patch("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     await Task.findByIdAndDelete(req.params.id);
-    res.json({ message: "Task deleted" });
+    res.json({ message: "Task deleted successfully!" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

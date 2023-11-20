@@ -10,4 +10,10 @@ const BUTTON_LABELS = {
   [MODALTYPES.DELETE]: "Delete",
 };
 
-export { MODALTYPES, BUTTON_LABELS };
+const TASK_STATUS = {
+  TO_DO: "To Do",
+  IN_PROGRESS: "In Progress",
+  DONE: "Done",
+};
+
+export { MODALTYPES, BUTTON_LABELS, TASK_STATUS };
