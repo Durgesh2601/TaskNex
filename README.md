@@ -1,6 +1,6 @@
 # TaskNex Project
 
-TaskNex is a simple task management application with a frontend and backend built using Next.js and Node.js with MongoDB as the database.
+TaskNex is a simple task management application with a frontend and backend built using React.js and Node.js with MongoDB as the database.
 
 ## Table of Contents
 
