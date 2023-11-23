@@ -32,3 +32,64 @@ Make sure you have the following software installed on your machine:
 
    ```bash
    git clone https://github.com/your-username/tasknex.git
+
+   ```
+
+2. Navigate to the project folder:
+
+   ```bash
+   cd tasknex
+
+   ```
+
+3. Install dependencies for both frontend and backend:
+
+```bash
+# Install backend dependencies
+cd tasknex-backend
+npm install
+
+# Install frontend dependencies
+cd ../tasknex-frontend
+npm install
+
+```
+
+### Project Structure
+
+The project is structured into two main folders:
+
+`tasknex-backend`: Contains the backend code built with Node.js and Express.
+`tasknex-frontend`: Contains the frontend code built with React.js and AntDesign.
+
+### Configuration
+
+#### Backend Configuration
+
+1. Create a .env file in the tasknex-backend folder.
+
+2. Add the following configurations to the .env file:
+
+```PORT=3001
+MONGODB_URI=mongodb://localhost:27017/tasknex
+```
+(Adjust the PORT and MONGODB_URI values as needed)
+
+### Running the Application
+
+1. Start the backend server:
+
+# From the tasknex-backend folder
+npm start
+
+(This will start the backend server on the specified port)
+
+2. Start the frontend development server:
+
+```# From the tasknex-frontend folder
+npm run dev
+```
+
+(This will start the frontend development server. Open your browser and navigate to http://localhost:3000 to access the application)
+
+And all set!!
