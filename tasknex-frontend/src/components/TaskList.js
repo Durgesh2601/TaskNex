@@ -1,4 +1,4 @@
-import { Table, Button, Space, Tag, Row, Col } from "antd";
+import { Table, Button, Tag, Row, Col } from "antd";
 import { getColorByStatus } from "../utils/helperMethods";
 
 const TaskList = ({ tasks, onUpdate, onDelete }) => {
