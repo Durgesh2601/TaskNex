@@ -79,8 +79,8 @@ MONGODB_URI=mongodb://localhost:27017/tasknex
 
 1. Start the backend server:
 
-# From the tasknex-backend folder
-npm start
+#### From the tasknex-backend folder
+```npm start```
 
 (This will start the backend server on the specified port)
 
