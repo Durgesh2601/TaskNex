@@ -60,6 +60,7 @@ npm install
 The project is structured into two main folders:
 
 `tasknex-backend`: Contains the backend code built with Node.js and Express.
+
 `tasknex-frontend`: Contains the frontend code built with React.js and AntDesign.
 
 ### Configuration
@@ -70,9 +71,9 @@ The project is structured into two main folders:
 
 2. Add the following configurations to the .env file:
 
-```PORT=3001
-MONGODB_URI=mongodb://localhost:27017/tasknex
-```
+```PORT=3001``` 
+```MONGODB_URI=mongodb://localhost:27017/tasknex```
+
 (Adjust the PORT and MONGODB_URI values as needed)
 
 ### Running the Application
@@ -87,9 +88,9 @@ MONGODB_URI=mongodb://localhost:27017/tasknex
 2. Start the frontend development server:
 
 ```# From the tasknex-frontend folder
-npm run dev
+npm start
 ```
 
 (This will start the frontend development server. Open your browser and navigate to http://localhost:3000 to access the application)
 
-And all set!!
+And all set! 
