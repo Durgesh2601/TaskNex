@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Form, message } from "antd";
+import { Form, message, Skeleton } from "antd";
 import Header from "../components/Header";
 import TaskList from "../components/TaskList";
 import TaskForm from "../components/TaskForm";
@@ -15,19 +15,23 @@ const HomePage = () => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [isBtnLoading, setIsBtnLoading] = useState(false);
   const [modalType, setModalType] = useState("Create");
+  const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
 
   useEffect(() => {
     // Fetch tasks data from the API
     try {
       (async function getTasksData() {
+        setIsLoading(true);
         const response = await getTasks();
         const { data = [] } = response || {};
         setTasks(data);
+        setIsLoading(false);
       })();
     } catch (error) {
       console.error(error);
       message.error("Failed to fetch tasks");
+      setIsLoading(false);
     }
   }, []);
 
@@ -107,6 +111,7 @@ const HomePage = () => {
     setSelectedTask(null);
     form.resetFields();
     setIsBtnLoading(false);
+    setFilter("All");
   };
 
   const handleAddTask = () => {
@@ -118,14 +123,18 @@ const HomePage = () => {
   return (
     <div>
       <Header onAddTaskClick={handleAddTask} />
-      <TaskFilter onChange={handleFilterChange} />
-      <TaskList
-        tasks={tasks.filter((task) =>
-          filter === "All" ? true : task.status === filter
-        )}
-        onUpdate={handleTaskUpdate}
-        onDelete={handleTaskDelete}
-      />
+      <TaskFilter onChange={handleFilterChange} filter={filter} />
+      {isLoading ? (
+        <Skeleton active />
+      ) : (
+        <TaskList
+          tasks={tasks.filter((task) =>
+            filter === "All" ? true : task?.status === filter
+          )}
+          onUpdate={handleTaskUpdate}
+          onDelete={handleTaskDelete}
+        />
+      )}
       {showModal && (
         <ActionModal
           showModal={showModal}

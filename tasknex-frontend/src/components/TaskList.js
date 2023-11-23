@@ -1,4 +1,4 @@
-import { Table, Button, Space, Tag } from "antd";
+import { Table, Button, Space, Tag, Row, Col } from "antd";
 import { getColorByStatus } from "../utils/helperMethods";
 
 const TaskList = ({ tasks, onUpdate, onDelete }) => {
@@ -28,19 +28,29 @@ const TaskList = ({ tasks, onUpdate, onDelete }) => {
       key: "actions",
       align: "center",
       render: (text, record) => (
-        <Space size="middle">
-          <Button type="link" onClick={() => onUpdate(record)}>
-            Edit
-          </Button>
-          <Button type="link" danger onClick={() => onDelete(record)}>
-            Delete
-          </Button>
-        </Space>
+        <Row align="center">
+          <Col>
+            <Button type="link" onClick={() => onUpdate(record)}>
+              Edit
+            </Button>
+          </Col>
+          <Col>
+            <Button type="link" danger onClick={() => onDelete(record)}>
+              Delete
+            </Button>
+          </Col>
+        </Row>
       ),
     },
   ];
 
-  return <Table dataSource={tasks} columns={columns} pagination={false} />;
+  return (
+    <Row>
+      <Col xs={24} span={24}>
+        <Table dataSource={tasks} columns={columns} pagination={false} />
+      </Col>
+    </Row>
+  );
 };
 
 export default TaskList;

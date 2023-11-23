@@ -1,5 +1,5 @@
 import { Modal, Row, Col, Button, Form } from "antd";
-import { BUTTON_LABELS } from "../constants";
+import { BUTTON_LABELS, MODALTYPES } from "../constants";
 
 const btnStyle = {
   width: "100%",
@@ -16,15 +16,16 @@ const ActionModal = ({
 }) => {
   const modalFooter = (
     <Row justify="space-between" style={{ marginTop: "1.5rem" }}>
-      <Col span={6}>
+      <Col xs={10} sm={8}>
         <Button style={{ ...btnStyle }} onClick={handleClose}>
           Cancel
         </Button>
       </Col>
-      <Col span={6}>
+      <Col xs={10} sm={8}>
         <Form.Item>
           <Button
             type="primary"
+            danger={action === MODALTYPES.DELETE}
             htmlType="submit"
             loading={isBtnLoading}
             style={{ ...btnStyle }}
